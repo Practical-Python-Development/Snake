@@ -29,13 +29,13 @@ def main():
                 sys.exit()
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_UP:
-                    direction=(0,1)
-                elif event.key == pygame.K_DOWN:
                     direction=(0,-1)
+                elif event.key == pygame.K_DOWN:
+                    direction=(0,1)
                 elif event.key == pygame.K_LEFT:
-                    direction=(1,0)
-                elif event.key == pygame.K_RIGHT:
                     direction=(-1,0)
+                elif event.key == pygame.K_RIGHT:
+                    direction=(1,0)
 
         #How Snake should move and grow
         head_x, head_y = snake[0]
