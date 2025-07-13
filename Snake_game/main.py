@@ -6,6 +6,32 @@ COLS, ROWS = 20, 20
 BLOCK_SIZE = 20
 FPS = 10
 
+def show_start_screen(screen):
+    """Shows a start screen and the snake doesn´t start from alone."""
+    font = pygame.font.SysFont(None, 36)
+    text_surf = font.render("Press any arrow key to start", True, (255, 255, 255))
+    text_rect = text_surf.get_rect(center=(COLS*BLOCK_SIZE//2, ROWS*BLOCK_SIZE//2))
+
+    while True:
+        screen.fill((0, 0, 0))
+        screen.blit(text_surf, text_rect)
+        pygame.display.flip()
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_UP:
+                    return (0,1)
+                elif event.key == pygame.K_DOWN:
+                    return (0,1)
+                elif event.key == pygame.K_LEFT:
+                    return (-1,0)
+                elif event.key == pygame.K_RIGHT:
+                    return (1,0)
+
+
 def show_game_over(screen):
     """shows game over on the screens and ends the game"""
     font = pygame.font.SysFont(None, 48)
@@ -29,9 +55,11 @@ def main():
     board = Board(COLS, ROWS, BLOCK_SIZE)
     food = Food(board)
 
+    direction = show_start_screen(screen)
+
     # start position of the snake
     snake = [(COLS // 2, ROWS // 2), (COLS // 2 + 1, ROWS // 2)]
-    direction = (-1, 0)
+
 
     # reaction of the snake via key commands
     while True:
