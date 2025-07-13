@@ -19,4 +19,8 @@ If that works:
 
 Speed adjustment, the longer the snake, the faster it gets.
 
-Leaderboard (TopTen)
+Leaderboard/Highscore (TopTen)
+
+break-function
+
+sound effects? 
