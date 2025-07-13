@@ -1,4 +1,5 @@
 import pygame
+import random
 
 class Board:
     def __init__(self, cols=20, rows=20, block_size=20,
@@ -36,3 +37,29 @@ class Board:
                     self.block_size
                 )
                 pygame.draw.rect(surface, self.gridcolor, rect, 1)
+
+class Food:
+    def __init__(self, board):
+        """Creates new lining at a random position in the grid.
+
+        Args:
+         board (Board): Reference to the board to query boundaries.
+        """
+        self.board = board
+        self.position = self.random_position()
+
+    def random_position(self):
+        """calculates the food within the board."""
+        x = random.randrange(0, self.board.cols)
+        y = random.randrange(0, self.board.rows)
+        return(x, y)
+
+    def draw(self, surface):
+        """prints the food on the board"""
+        x,y = self.position
+        rect = pygame.Rect(x*self.board.block_size,
+                           y*self.board.block_size,
+                           self.board.block_size,
+                           self.board.block_size
+                           )
+        pygame.draw.rect(surface, (255, 0, 0), rect)

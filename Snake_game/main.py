@@ -1,6 +1,6 @@
 import sys
 import pygame
-from board import Board
+from board import Board, Food
 
 COLS, ROWS = 20, 20
 BLOCK_SIZE = 20
@@ -16,9 +16,10 @@ def main():
     screen = pygame.display.set_mode((COLS * BLOCK_SIZE, ROWS * BLOCK_SIZE))
     clock = pygame.time.Clock()
     board = Board(COLS, ROWS, BLOCK_SIZE)
+    food = Food(board)
 
     # start position of the snake
-    snake = [(COLS // 2 + i, ROWS // 2) for i in range(3)]
+    snake = [(COLS // 2, ROWS // 2), (COLS // 2 + 1, ROWS // 2)]
     direction = (-1, 0)
 
     # reaction of the snake via key commands
@@ -42,9 +43,15 @@ def main():
         dx, dy = direction
         new_head = ((head_x + dx) % COLS, (head_y + dy) % ROWS)
         snake.insert(0, new_head)
-        snake.pop()
+
+        if new_head == food.position:
+            food = Food(board)
+        else:
+            snake.pop()
 
         board.draw(screen)
+        food.draw(screen)
+
         for x, y in snake:
             rect = pygame.Rect(
                 x * BLOCK_SIZE,
