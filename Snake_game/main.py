@@ -52,7 +52,7 @@ def show_start_screen(screen, highscore):
                     return (1,0)
 
 
-def show_game_over(screen, score, highscore):
+def show_game_over(screen, score, highscore, new_highscore):
     """shows game over on the screens and ends the game"""
     font_big = pygame.font.SysFont(None, 48)
     font_small = pygame.font.SysFont(None, 30)
@@ -67,12 +67,24 @@ def show_game_over(screen, score, highscore):
     rect_high = text_high.get_rect(center=(COLS*BLOCK_SIZE//2, ROWS*BLOCK_SIZE//2 + 10))
     rect_restart = text_restart.get_rect(center=(COLS*BLOCK_SIZE//2,ROWS*BLOCK_SIZE//2+50))
 
+    if new_highscore:
+        text_congrats = font_small.render(
+            "Congratulations, you've cracked the high score!", True, (0, 255, 0)
+        )
+        rect_congrats = text_congrats.get_rect(
+            center=(COLS * BLOCK_SIZE // 2, ROWS * BLOCK_SIZE // 2 + 80)
+        )
+
     while True:
         screen.fill((0, 0, 0))
         screen.blit(text_surf, rect)
         screen.blit(text_score, rect_score)
         screen.blit(text_high, rect_high)
         screen.blit(text_restart, rect_restart)
+
+        if new_highscore:
+            screen.blit(text_congrats, rect_congrats)
+
         pygame.display.flip()
 
         for event in pygame.event.get():
@@ -174,12 +186,14 @@ def main():
 
         score = play(screen, clock, board, direction)
 
+        old_highscore = highscore
 
         if score > highscore:
             highscore = score
             save_highscore(highscore)
+        new_high = score > old_highscore
 
-        if not show_game_over(screen, score, highscore):
+        if not show_game_over(screen, score, highscore, new_high):
             pygame.quit()
             sys.exit()
 
