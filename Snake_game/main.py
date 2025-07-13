@@ -6,6 +6,17 @@ COLS, ROWS = 20, 20
 BLOCK_SIZE = 20
 FPS = 10
 
+def show_game_over(screen):
+    """shows game over on the screens and ends the game"""
+    font = pygame.font.SysFont(None, 48)
+    text_surf = font.render("Game Over", True, (255, 0, 0))
+    rect = text_surf.get_rect(center=(COLS*BLOCK_SIZE//2, ROWS*BLOCK_SIZE//2))
+    screen.blit(text_surf, rect)
+    pygame.display.flip()
+    pygame.time.wait(2000)
+    pygame.quit()
+    sys.exit()
+
 def main():
     """Starts the Snake game, initiates Pygame and executes the main loop.
 
@@ -38,10 +49,17 @@ def main():
                 elif event.key == pygame.K_RIGHT:
                     direction=(1,0)
 
-        #How Snake should move and grow
+        #How Snake should move and grow with collision
         head_x, head_y = snake[0]
         dx, dy = direction
-        new_head = ((head_x + dx) % COLS, (head_y + dy) % ROWS)
+        new_head = ((head_x + dx), (head_y + dy))
+
+        #Collision
+        if not (0<= new_head[0] < COLS and 0 <= new_head[1] < ROWS):
+            show_game_over(screen)
+        if new_head in snake:
+            show_game_over(screen)
+
         snake.insert(0, new_head)
 
         if new_head == food.position:
