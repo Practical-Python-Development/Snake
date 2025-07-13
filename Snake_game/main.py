@@ -53,7 +53,18 @@ def show_start_screen(screen, highscore):
 
 
 def show_game_over(screen, score, highscore, new_highscore):
-    """shows game over on the screens and ends the game"""
+    """
+    Game-Over-Screen: shows score, highscore and optionally
+    a congratulations message, waits for SPACE (restart) or X (quit).
+
+    Args:
+        screen (pygame.Surface): Target surface.
+        score (int): currently achieved score.
+        highscore (int): current highscore (already updated if necessary).
+        new_highscore (bool): True if score > previous highscore.
+    Returns:
+        bool: True = restart (SPACE), False = exit (X/ESC).
+    """
     font_big = pygame.font.SysFont(None, 48)
     font_small = pygame.font.SysFont(None, 30)
 
