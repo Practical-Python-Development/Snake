@@ -86,10 +86,22 @@ def show_game_over(screen, score, highscore):
                     return False
 
 def play(screen, clock, board, initial_direction):
-    """Starts the Snake game, initiates Pygame and executes the main loop.
+    """
+    Executes a round of snake and returns the number of points scored.
 
-    Opens the window, initializes game state and processes
-    input, movement and drawing in each loop iteration.
+    The function initializes the snake based on the passed
+    start direction, processes inputs (arrow keys for direction, X/ESC to end),
+    moves the snake, checks for collisions with the edge and itself,
+    attracts food and records the game state and current score.
+
+    Args:
+        screen (pygame.Surface): The surface on which the game is rendered.
+        clock (pygame.time.Clock): Controls the frame rate (FPS).
+        board (Board): Instance of the game board for grid and background.
+        initial_direction (tuple): Start direction of the snake as (dx, dy).
+
+    Returns:
+        int: Number of food pieces eaten (= score achieved).
     """
 
 
