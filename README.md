@@ -17,10 +17,12 @@ allowed as long as the snail has moved at least one length unit further)
 
 If that works:
 
-Speed adjustment, the longer the snake, the faster it gets.
+Speed adjustment, the longer the snake, the faster it gets. |could be done.
 
-Leaderboard/Highscore (TopTen)
+Leaderboard/Highscore (TopTen) |check
 
-break-function
+break-function |has to be done
 
 sound effects? 
+
+At the end einen Unit-test schreiben. 
