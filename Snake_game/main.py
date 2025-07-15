@@ -54,7 +54,7 @@ def show_start_screen(screen, highscore):
                 elif event.key == pygame.K_RIGHT:
                     return (1,0)
 
-def pause(screen):
+def pause(screen, clock):
     """With this function the player is able to pause the game.
      So the game is frozen and waits until the next command is given."""
     font_big = pygame.font.SysFont(None, 48)
@@ -71,6 +71,7 @@ def pause(screen):
         screen.blit(txt_pause, r_pause)
         screen.blit(txt_info, r_info)
         pygame.display.flip()
+        clock.tick(FPS)
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -186,6 +187,9 @@ def play(screen, clock, board, initial_direction):
                     direction=(-1,0)
                 elif event.key == pygame.K_RIGHT:
                     direction=(1,0)
+                elif event.key in (pygame.K_x, pygame.K_ESCAPE):
+                    pygame.quit()
+                    sys.exit()
 
 
         head_x, head_y = snake[0]
