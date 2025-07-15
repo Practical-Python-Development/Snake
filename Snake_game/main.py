@@ -26,15 +26,19 @@ def save_highscore(score, path=HS_FILE):
 def show_start_screen(screen, highscore):
     """Shows a start screen and the snake do not start from alone."""
     font = pygame.font.SysFont(None, 36)
+    font_big = pygame.font.SysFont(None, 50)
+    text_head = font_big.render("Welcome to the SNAKE Game", True, (0, 255, 255))
     text_surf = font.render("Press any arrow key to start", True, (255, 255, 255))
     text_high = font.render(f"Highscore: {highscore}", True, (255,255,0))
     text_pause = font.render("Press SPACE during game to pause", True, (200,200,200))
+    text_recthead = text_head.get_rect(center=(COLS*BLOCK_SIZE//2, ROWS*BLOCK_SIZE//2-175))
     text_rect = text_surf.get_rect(center=(COLS*BLOCK_SIZE//2, ROWS*BLOCK_SIZE//2-20))
     text_recthigh = text_high.get_rect(center=(COLS*BLOCK_SIZE//2, ROWS*BLOCK_SIZE//2+10))
-    text_rectpause = text_pause.get_rect(center=(COLS*BLOCK_SIZE//2, ROWS*BLOCK_SIZE//2 + 40))
+    text_rectpause = text_pause.get_rect(center=(COLS*BLOCK_SIZE//2, ROWS*BLOCK_SIZE//2 + 100))
 
     while True:
         screen.fill((0, 0, 0))
+        screen.blit(text_head, text_recthead)
         screen.blit(text_surf, text_rect)
         screen.blit(text_high, text_recthigh)
         screen.blit(text_pause, text_rectpause)
