@@ -28,13 +28,16 @@ def show_start_screen(screen, highscore):
     font = pygame.font.SysFont(None, 36)
     text_surf = font.render("Press any arrow key to start", True, (255, 255, 255))
     text_high = font.render(f"Highscore: {highscore}", True, (255,255,0))
+    text_pause = font.render("Press SPACE during game to pause", True, (200,200,200))
     text_rect = text_surf.get_rect(center=(COLS*BLOCK_SIZE//2, ROWS*BLOCK_SIZE//2-20))
-    text_recthigh = text_high.get_rect(center=(COLS*BLOCK_SIZE//2, ROWS*BLOCK_SIZE//2+20))
+    text_recthigh = text_high.get_rect(center=(COLS*BLOCK_SIZE//2, ROWS*BLOCK_SIZE//2+10))
+    text_rectpause = text_pause.get_rect(center=(COLS*BLOCK_SIZE//2, ROWS*BLOCK_SIZE//2 + 40))
 
     while True:
         screen.fill((0, 0, 0))
         screen.blit(text_surf, text_rect)
         screen.blit(text_high, text_recthigh)
+        screen.blit(text_pause, text_rectpause)
         pygame.display.flip()
 
         for event in pygame.event.get():
@@ -51,6 +54,34 @@ def show_start_screen(screen, highscore):
                 elif event.key == pygame.K_RIGHT:
                     return (1,0)
 
+def pause(screen):
+    """With this function the player is able to pause the game.
+     So the game is frozen and waits until the next command is given."""
+    font_big = pygame.font.SysFont(None, 48)
+    font_small = pygame.font.SysFont(None, 30)
+
+    txt_pause = font_big.render("Paused", True, (255, 255, 255))
+    txt_info = font_small.render("Press SPACE to resume or X to quit", True, (200, 200, 200))
+
+    r_pause = txt_pause.get_rect(center=(COLS * BLOCK_SIZE // 2, ROWS * BLOCK_SIZE // 2 - 20))
+    r_info = txt_info.get_rect(center=(COLS * BLOCK_SIZE // 2, ROWS * BLOCK_SIZE // 2 + 20))
+
+    while True:
+        screen.fill((0, 0, 0))
+        screen.blit(txt_pause, r_pause)
+        screen.blit(txt_info, r_info)
+        pygame.display.flip()
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_SPACE:
+                    return
+                if event.key in (pygame.K_x, pygame.K_ESCAPE):
+                    pygame.quit()
+                    sys.exit()
 
 def show_game_over(screen, score, highscore, new_highscore):
     """
@@ -139,7 +170,14 @@ def play(screen, clock, board, initial_direction):
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
-            elif event.type == pygame.KEYDOWN:
+
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_SPACE:
+                    pause(screen, clock)
+                    pygame.event.clear()
+                    break
+
+            #elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_UP:
                     direction=(0,-1)
                 elif event.key == pygame.K_DOWN:
