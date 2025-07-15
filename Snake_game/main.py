@@ -34,7 +34,7 @@ def show_start_screen(screen, highscore):
     text_recthead = text_head.get_rect(center=(COLS*BLOCK_SIZE//2, ROWS*BLOCK_SIZE//2-175))
     text_rect = text_surf.get_rect(center=(COLS*BLOCK_SIZE//2, ROWS*BLOCK_SIZE//2-20))
     text_recthigh = text_high.get_rect(center=(COLS*BLOCK_SIZE//2, ROWS*BLOCK_SIZE//2+10))
-    text_rectpause = text_pause.get_rect(center=(COLS*BLOCK_SIZE//2, ROWS*BLOCK_SIZE//2 + 100))
+    text_rectpause = text_pause.get_rect(center=(COLS*BLOCK_SIZE//2, ROWS*BLOCK_SIZE//2+100))
 
     while True:
         screen.fill((0, 0, 0))
