@@ -1,8 +1,8 @@
-# Snake Game
+# **Snake Game**
 This program displays the game Snake exactly as it was in cube form on the beautiful old Nokia 
 and not as smoothly as in the new versions, but with a bit more color.
 
-How to play the game: 
+ __How to play the game__: 
 
 Start the game by pressing one of the four arrow keys. Your task in the game is to guide the snake and feed it with the red food block. 
 If the snake eats the food, it grows by one block unit and a new food must be eaten. In the end, you should beat the high score.
