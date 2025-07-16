@@ -1,17 +1,20 @@
 """ This skript tests the main Snake program"""
 
 import unittest
-import main
-from board import Board, Food
 
 COLS, ROWS = 30, 30
 
 class TestSnakeMovement(unittest.TestCase):
     def test_move_20_steps_right(self):
         """
-        Idee: Simuliere 20 Moves nach rechts und stelle sicher,
-        dass die Schlange sich korrekt verschiebt und
-        immer innerhalb der Grenzen bleibt.
+        Tests the movement of the snake 20 steps to the right.
+
+        Starts with a snake of length 2 like declared in main (head at (0,0)) and simulates
+        20 steps in the direction of (1, 0). Verify that:
+
+        1. the head moves exactly 20 spaces to the right and thus ends up at (20, 0).
+        2. the snake always remains within the boundaries of the playing field (0 ≤ x < COLS, 0 ≤ y < ROWS)
+        3. the length of the snake remains constant at 2 (no unwanted growth or shrinkage).
         """
         # Start snake
         snake = [(0, 0), (-1, 0)]
