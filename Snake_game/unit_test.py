@@ -4,7 +4,7 @@ import unittest
 import main
 from board import Board, Food
 
-#COLS, ROWS = 30, 30
+COLS, ROWS = 30, 30
 
 class TestSnakeMovement(unittest.TestCase):
     def test_move_20_steps_right(self):
@@ -21,10 +21,10 @@ class TestSnakeMovement(unittest.TestCase):
             head_x, head_y = snake[0]
             new_head = (head_x + direction[0], head_y + direction[1])
 
-            self.assertTrue(new_head)
+            self.assertTrue(new_head[0] < COLS)
 
 
-        self.assertEqual(snake[0], (20, 0))
+        self.assertEqual(snake[0], (20, 0)) #runs into error in this line
         self.assertEqual(len(snake), 2)
 
 
