@@ -24,7 +24,24 @@ def save_highscore(score, path=HS_FILE):
         f.write(str(score))
 
 def show_start_screen(screen, highscore):
-    """Shows a start screen and the snake do not start from alone."""
+    """
+    Shows the start screen and waits for an arrow key input.
+
+    Draws notes on the screen:
+      - Prompt to start with an arrow key
+      - Display of the current high score
+      - Reminder of the pause function (SPACE)
+
+    Args:
+        screen (pygame.Surface): Surface for rendering the start screen.
+        highscore (int): The highest score so far to display.
+
+    Returns:
+        tuple[int, int]:
+            Selected start direction as (dx, dy):
+            (0, -1) for up, (0, 1) for down,
+            (-1, 0) for left or (1, 0) for right.
+    """
     font = pygame.font.SysFont(None, 36)
     font_big = pygame.font.SysFont(None, 50)
     text_head = font_big.render("Welcome to the SNAKE Game", True, (0, 255, 255))
@@ -59,8 +76,20 @@ def show_start_screen(screen, highscore):
                     return (1,0)
 
 def pause(screen, clock):
-    """With this function the player is able to pause the game.
-     So the game is frozen and waits until the next command is given."""
+    """
+    Pause the game and show the pause screen.
+
+    Interrupts the game logic until the player continues via SPACE
+    or ends the game via X or ESC. Draws a pause hint
+    and a control instruction.
+
+    Args:
+        screen (pygame.Surface): Surface for rendering the pause screen.
+        clock (pygame.time.Clock): Clock instance for frame rate control.
+
+    Returns:
+        None
+    """
     font_big = pygame.font.SysFont(None, 48)
     font_small = pygame.font.SysFont(None, 30)
 
@@ -99,7 +128,7 @@ def show_game_over(screen, score, highscore, new_highscore):
         highscore (int): current highscore (already updated if necessary).
         new_highscore (bool): True if score > previous highscore.
     Returns:
-        bool: True = restart (SPACE), False = exit (X/ESC).
+        bool: True = restart (SPACE), False = exit (X or ESC).
     """
     font_big = pygame.font.SysFont(None, 48)
     font_small = pygame.font.SysFont(None, 30)
@@ -149,7 +178,7 @@ def play(screen, clock, board, initial_direction):
     Executes a round of snake and returns the number of points scored.
 
     The function initializes the snake based on the passed
-    start direction, processes inputs (arrow keys for direction, X/ESC to end),
+    start direction, processes inputs (arrow keys for direction, X or ESC to end),
     moves the snake, checks for collisions with the edge and itself,
     attracts food and records the game state and current score.
 
