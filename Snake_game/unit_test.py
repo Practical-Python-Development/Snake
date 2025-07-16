@@ -1,4 +1,4 @@
-""" This skript tests the main Snake Programm"""
+""" This skript tests the main Snake program"""
 
 import unittest
 import main
@@ -21,7 +21,11 @@ class TestSnakeMovement(unittest.TestCase):
             head_x, head_y = snake[0]
             new_head = (head_x + direction[0], head_y + direction[1])
 
-            self.assertTrue(new_head[0] < COLS)
+            self.assertTrue(0 <= new_head[0] < COLS)
+            self.assertTrue(0 <= new_head[0] < ROWS)
+
+            snake.insert(0, new_head)
+            snake.pop()
 
 
         self.assertEqual(snake[0], (20, 0)) #runs into error in this line
