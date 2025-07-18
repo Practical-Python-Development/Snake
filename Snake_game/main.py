@@ -67,7 +67,7 @@ def show_start_screen(screen, highscore):
                 sys.exit()
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_UP:
-                    return (0,1)
+                    return (0,-1)
                 elif event.key == pygame.K_DOWN:
                     return (0,1)
                 elif event.key == pygame.K_LEFT:
