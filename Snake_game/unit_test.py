@@ -5,6 +5,7 @@ import unittest
 COLS, ROWS = 30, 30
 
 class TestSnakeMovement(unittest.TestCase):
+
     def test_move_20_steps_right(self):
         """
         Tests the movement of the snake 20 steps to the right.
@@ -16,7 +17,7 @@ class TestSnakeMovement(unittest.TestCase):
         2. the snake always remains within the boundaries of the playing field (0 ≤ x < COLS, 0 ≤ y < ROWS)
         3. the length of the snake remains constant at 2 (no unwanted growth or shrinkage).
         """
-        # Start snake
+        # Start snake  # unnecessary comment
         snake = [(0, 0), (-1, 0)]
         direction = (1, 0)
 
@@ -31,10 +32,9 @@ class TestSnakeMovement(unittest.TestCase):
             snake.pop()
 
 
-        self.assertEqual(snake[0], (20, 0)) #runs into error in this line
+        self.assertEqual(snake[0], (20, 0))  # runs into error in this line  # proper comment whitespacing
         self.assertEqual(len(snake), 2)
 
 
 if __name__ == "__main__":
     unittest.main()
-
