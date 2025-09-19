@@ -1,8 +1,8 @@
 import random
 import pygame
 
-from .board import Board
-from .config import COLOR_FOOD
+from board import Board
+from config import COLOR_FOOD
 
 
 class Food:

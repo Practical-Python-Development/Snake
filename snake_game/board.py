@@ -1,7 +1,7 @@
 import pygame
 from itertools import product
 
-from .config import GRID_COLS, GRID_ROWS, BLOCK_SIZE, COLOR_BG, COLOR_GRID
+from config import GRID_COLS, GRID_ROWS, BLOCK_SIZE, COLOR_BG, COLOR_GRID
 
 
 class Board:
