@@ -42,7 +42,7 @@ def save_highscore(score: int, path: Path = HIGH_SCORE_FILE) -> None:
     path.write_text(str(score))
 
 
-def handle_input(direction: tuple[int, int], screen: pygame.Surface, clock: pygame.time.Clock) -> tuple[int, int] | None:
+def handle_input(direction: tuple[int, int], screen: pygame.Surface, clock: pygame.time.Clock) -> tuple[int, int]:
     """
     Handle player input events and return the updated movement direction.
 

@@ -1,8 +1,9 @@
 import random
 import pygame
 
-from board import Board
-from config import COLOR_FOOD
+from snake_game.board import Board
+from snake_game.config import COLOR_FOOD
+
 
 
 class Food:
