@@ -1,29 +1,36 @@
+from pathlib import Path  # import order
 import sys
-import os
+
 import pygame
+
 from board import Board, Food
+# On module level "parts" (like imports, constants, functions, ...) are seperated by 2 new lines
+
 
 COLS, ROWS = 30, 30
 BLOCK_SIZE = 20
 FPS = 10
-HS_FILE = "highscore.txt"
+HIGH_SCORE_FILE = Path("highscore.txt")  # use proper python build in libraries; HS could also be High School...
 
-def load_highscore(path=HS_FILE):
+
+def load_highscore(path=HIGH_SCORE_FILE):  # typing, also return type
     """Loads the highscore from another file and gives it back."""
-    if os.path.isfile(path):
-        try:
-            with open(path, "r") as f:
-                return int(f.read().strip())
-        except ValueError:
-            return 0
-    return 0
+    if not path.is_file():  # first check for special cases
+        return 0
+    try:  # ... this reduces indentations here and therefor complexity
+        with open(path, "r") as f:
+            return int(f.read().strip())
+    except ValueError:
+        return 0
 
-def save_highscore(score, path=HS_FILE):
-    """Wrotes the new highscore in the file."""
+
+def save_highscore(score, path=HIGH_SCORE_FILE):  # typing
+    """Write the new highscore to the file."""
     with open(path, "w") as f:
         f.write(str(score))
 
-def show_start_screen(screen, highscore):
+
+def show_start_screen(screen, highscore):  # typing, also return type
     """
     Shows the start screen and waits for an arrow key input.
 
@@ -44,21 +51,21 @@ def show_start_screen(screen, highscore):
     """
     font = pygame.font.SysFont(None, 36)
     font_big = pygame.font.SysFont(None, 50)
-    text_head = font_big.render("Welcome to the SNAKE Game", True, (0, 255, 255))
-    text_surf = font.render("Press any arrow key to start", True, (255, 255, 255))
-    text_high = font.render(f"Highscore: {highscore}", True, (255,255,0))
-    text_pause = font.render("Press SPACE during game to pause", True, (200,200,200))
-    text_recthead = text_head.get_rect(center=(COLS*BLOCK_SIZE//2, ROWS*BLOCK_SIZE//2-175))
-    text_rect = text_surf.get_rect(center=(COLS*BLOCK_SIZE//2, ROWS*BLOCK_SIZE//2-20))
-    text_recthigh = text_high.get_rect(center=(COLS*BLOCK_SIZE//2, ROWS*BLOCK_SIZE//2+10))
-    text_rectpause = text_pause.get_rect(center=(COLS*BLOCK_SIZE//2, ROWS*BLOCK_SIZE//2+100))
+    text_head = font_big.render("Welcome to the SNAKE Game", True, (0, 255, 255))  # constants, you can make all settings as a constant tuple like this HEADER = ("Welcome to the SNAKE Game", True, (0, 255, 255) and use  like this font_big.render(*HEADER)
+    text_surf = font.render("Press any arrow key to start", True, (255, 255, 255))  # constants
+    text_high = font.render(f"Highscore: {highscore}", True, (255, 255, 0))  # constants
+    text_pause = font.render("Press SPACE during game to pause", True, (200, 200, 200))  # constants
+    text_rect_head = text_head.get_rect(center=(COLS*BLOCK_SIZE//2, ROWS*BLOCK_SIZE//2 - 175))  # Why 175? -> properly named constant
+    text_rect = text_surf.get_rect(center=(COLS*BLOCK_SIZE//2, ROWS*BLOCK_SIZE//2 - 20))  # Why 20? -> properly named constant
+    text_rect_high = text_high.get_rect(center=(COLS*BLOCK_SIZE//2, ROWS*BLOCK_SIZE//2 + 10))  # Why 10? -> properly named constant
+    text_rect_pause = text_pause.get_rect(center=(COLS*BLOCK_SIZE//2, ROWS*BLOCK_SIZE//2 + 100))  # Why 100? -> properly named constant
 
     while True:
         screen.fill((0, 0, 0))
-        screen.blit(text_head, text_recthead)
+        screen.blit(text_head, text_rect_head)
         screen.blit(text_surf, text_rect)
-        screen.blit(text_high, text_recthigh)
-        screen.blit(text_pause, text_rectpause)
+        screen.blit(text_high, text_rect_high)
+        screen.blit(text_pause, text_rect_pause)
         pygame.display.flip()
 
         for event in pygame.event.get():
@@ -67,15 +74,16 @@ def show_start_screen(screen, highscore):
                 sys.exit()
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_UP:
-                    return (0,-1)
+                    return (0, -1)  # redundant parenthesis (PyCharm highlights this), whitespace, after ","
                 elif event.key == pygame.K_DOWN:
-                    return (0,1)
+                    return (0, 1)  # redundant parenthesis (PyCharm highlights this), whitespace, after ","
                 elif event.key == pygame.K_LEFT:
-                    return (-1,0)
+                    return (-1, 0)  # redundant parenthesis (PyCharm highlights this), whitespace, after ","
                 elif event.key == pygame.K_RIGHT:
-                    return (1,0)
+                    return (1, 0)  # redundant parenthesis (PyCharm highlights this), whitespace, after ","
 
-def pause(screen, clock):
+
+def pause(screen, clock):  #t yping
     """
     Pause the game and show the pause screen.
 
@@ -90,14 +98,14 @@ def pause(screen, clock):
     Returns:
         None
     """
-    font_big = pygame.font.SysFont(None, 48)
-    font_small = pygame.font.SysFont(None, 30)
+    font_big = pygame.font.SysFont(None, 48)  # 48 -> constant
+    font_small = pygame.font.SysFont(None, 30)  # 30 -> constant, it might make sense to have a config.py with all the game config constants
 
-    txt_pause = font_big.render("Paused", True, (255, 255, 255))
-    txt_info = font_small.render("Press SPACE to resume or X to quit", True, (200, 200, 200))
+    txt_pause = font_big.render("Paused", True, (255, 255, 255))  # constant
+    txt_info = font_small.render("Press SPACE to resume or X to quit", True, (200, 200, 200))  # constant
 
-    r_pause = txt_pause.get_rect(center=(COLS * BLOCK_SIZE // 2, ROWS * BLOCK_SIZE // 2 - 20))
-    r_info = txt_info.get_rect(center=(COLS * BLOCK_SIZE // 2, ROWS * BLOCK_SIZE // 2 + 20))
+    r_pause = txt_pause.get_rect(center=(COLS * BLOCK_SIZE // 2, ROWS * BLOCK_SIZE // 2 - 20))  # Why 20? -> properly named constant
+    r_info = txt_info.get_rect(center=(COLS * BLOCK_SIZE // 2, ROWS * BLOCK_SIZE // 2 + 20))  # Why 20? -> properly named constant
 
     while True:
         screen.fill((0, 0, 0))
@@ -117,7 +125,8 @@ def pause(screen, clock):
                     pygame.quit()
                     sys.exit()
 
-def show_game_over(screen, score, highscore, new_highscore):
+
+def show_game_over(screen, score, highscore, new_highscore):  # typing, also return type
     """
     Game-Over-Screen: shows score, highscore and optionally
     a congratulations message, waits for SPACE (restart) or X (quit).
@@ -130,29 +139,29 @@ def show_game_over(screen, score, highscore, new_highscore):
     Returns:
         bool: True = restart (SPACE), False = exit (X or ESC).
     """
-    font_big = pygame.font.SysFont(None, 48)
-    font_small = pygame.font.SysFont(None, 30)
+    font_big = pygame.font.SysFont(None, 48)  # constant, see above
+    font_small = pygame.font.SysFont(None, 30)  # constant, see above
 
-    text_surf = font_big.render("Game Over", True, (255, 0, 0))
-    text_score = font_small.render(f"Your Score: {score}",True, (255,255,255))
-    text_high = font_small.render(f"Highscore: {highscore}", True, (255,255,0))
-    text_restart = font_small.render("Press SPACE to restart or X to end", True, (200, 200, 200))
+    text_surf = font_big.render("Game Over", True, (255, 0, 0))  # constant, see above
+    text_score = font_small.render(f"Your Score: {score}",True, (255, 255 ,255))  # constant, see above, whitespaces
+    text_high = font_small.render(f"Highscore: {highscore}", True, (255, 255 ,0))  # constant, see above
+    text_restart = font_small.render("Press SPACE to restart or X to end", True, (200, 200, 200))  # constant, see above, color tuples can be also defined just once as a constant and then be reused
 
-    rect = text_surf.get_rect(center=(COLS*BLOCK_SIZE//2, ROWS*BLOCK_SIZE//2-60))
-    rect_score = text_score.get_rect(center=(COLS*BLOCK_SIZE//2, ROWS*BLOCK_SIZE//2 - 20))
-    rect_high = text_high.get_rect(center=(COLS*BLOCK_SIZE//2, ROWS*BLOCK_SIZE//2 + 10))
-    rect_restart = text_restart.get_rect(center=(COLS*BLOCK_SIZE//2,ROWS*BLOCK_SIZE//2+50))
+    rect = text_surf.get_rect(center=(COLS*BLOCK_SIZE//2, ROWS*BLOCK_SIZE//2 - 60))  # Why 60? -> properly named constant, whitespaces
+    rect_score = text_score.get_rect(center=(COLS*BLOCK_SIZE//2, ROWS*BLOCK_SIZE//2 - 20))  # Why 20? -> properly named constant
+    rect_high = text_high.get_rect(center=(COLS*BLOCK_SIZE//2, ROWS*BLOCK_SIZE//2 + 10))  # Why 10? -> properly named constant
+    rect_restart = text_restart.get_rect(center=(COLS*BLOCK_SIZE//2,ROWS*BLOCK_SIZE//2 + 50))  # Why 50? -> properly named constant, whitespaces
 
     if new_highscore:
         text_congrats = font_small.render(
-            "Congratulations, you've cracked the high score!", True, (0, 255, 0)
+            "Congratulations, you've cracked the high score!", True, (0, 255, 0)  # constant, see above
         )
         rect_congrats = text_congrats.get_rect(
-            center=(COLS * BLOCK_SIZE // 2, ROWS * BLOCK_SIZE // 2 + 80)
+            center=(COLS * BLOCK_SIZE // 2, ROWS * BLOCK_SIZE // 2 + 80)  # Why 50? -> properly named constant, whitespaces
         )
 
     while True:
-        screen.fill((0, 0, 0))
+        screen.fill((0, 0, 0))  # tuple as constant
         screen.blit(text_surf, rect)
         screen.blit(text_score, rect_score)
         screen.blit(text_high, rect_high)
@@ -164,6 +173,7 @@ def show_game_over(screen, score, highscore, new_highscore):
         pygame.display.flip()
 
         for event in pygame.event.get():
+            # The event handling has a lot of duplicate code over the different "states". Can make functions for this? `handle_quit()`
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
@@ -173,7 +183,8 @@ def show_game_over(screen, score, highscore, new_highscore):
                 if event.key in (pygame.K_x, pygame.K_ESCAPE):
                     return False
 
-def play(screen, clock, board, initial_direction):
+
+def play(screen, clock, board, initial_direction):  # typing, also return type
     """
     Executes a round of snake and returns the number of points scored.
 
@@ -191,11 +202,10 @@ def play(screen, clock, board, initial_direction):
     Returns:
         int: Number of food pieces eaten (= score achieved).
     """
-
-
+    # pretty massive function... Can you break it up and use some (protected) functions to handle parts of your logic?
     direction = initial_direction
-    head = (COLS // 2, ROWS // 2)
-    snake = [head,(head[0] - direction[0], head[1] - direction[1])]
+    head = (COLS // 2, ROWS // 2)  # head_position?
+    snake = [head,(head[0] - direction[0], head[1] - direction[1])]  # what is this? maybe rename,  restructure or comment
     food = Food(board)
     score = 0
 
@@ -211,15 +221,15 @@ def play(screen, clock, board, initial_direction):
                     pygame.event.clear()
                     break
 
-            #elif event.type == pygame.KEYDOWN:
+            #elif event.type == pygame.KEYDOWN:  # remove
                 if event.key == pygame.K_UP:
-                    direction=(0,-1)
+                    direction=(0,-1)  # whitespace
                 elif event.key == pygame.K_DOWN:
-                    direction=(0,1)
+                    direction=(0,1)  # whitespace
                 elif event.key == pygame.K_LEFT:
-                    direction=(-1,0)
+                    direction=(-1,0)  # whitespace
                 elif event.key == pygame.K_RIGHT:
-                    direction=(1,0)
+                    direction=(1,0)  # whitespace
                 elif event.key in (pygame.K_x, pygame.K_ESCAPE):
                     pygame.quit()
                     sys.exit()
@@ -229,7 +239,7 @@ def play(screen, clock, board, initial_direction):
         dx, dy = direction
         new_head = (head_x + dx, head_y + dy)
 
-        #Cllision
+        # Collision
         if not (0 <= new_head[0] < COLS and 0 <= new_head[1] < ROWS):
             break
         if new_head in snake:
@@ -237,7 +247,7 @@ def play(screen, clock, board, initial_direction):
 
         snake.insert(0, new_head)
 
-        #Food
+        # Food
         if new_head == food.position:
             score += 1
             food = Food(board)
@@ -246,18 +256,19 @@ def play(screen, clock, board, initial_direction):
 
         board.draw(screen)
         food.draw(screen)
+
         for x, y in snake:
             rect = pygame.Rect(x * BLOCK_SIZE, y * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE)
-            pygame.draw.rect(screen, (0, 255, 0), rect)
+            pygame.draw.rect(screen, (0, 255, 0), rect)  # color -> constant
 
-
-        score_surf = pygame.font.SysFont(None, 24).render(f"Score: {score}", True, (255, 255, 255))
-        screen.blit(score_surf, (5, 5))
+        score_surf = pygame.font.SysFont(None, 24).render(f"Score: {score}", True, (255, 255, 255))  # constant, see above
+        screen.blit(score_surf, (5, 5))  # Why (5, 5)? -> properly named constant
 
         pygame.display.flip()
         clock.tick(FPS)
 
     return score
+
 
 def main():
     """Joins all building blocks together"""
@@ -279,7 +290,7 @@ def main():
             save_highscore(highscore)
         new_high = score > old_highscore
 
-        if not show_game_over(screen, score, highscore, new_high):
+        if not show_game_over(screen, score, highscore, new_high):  # Nice!
             pygame.quit()
             sys.exit()
 
