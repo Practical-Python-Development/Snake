@@ -1,6 +1,33 @@
 import sys
 import pygame
-from snake_game.config import *
+
+from snake_game.config import (
+    FONT_MEDIUM,
+    FONT_BIG,
+    FONT_SMALL,
+    COLOR_TEXT_HEADER,
+    COLOR_TEXT,
+    COLOR_TEXT_HIGHLIGHT,
+    COLOR_TEXT_SECONDARY,
+    COLOR_TEXT_CONGRATS,
+    COLOR_GAME_OVER,
+    COLOR_BG,
+    GRID_COLS,
+    GRID_ROWS,
+    BLOCK_SIZE,
+    START_HEAD_OFFSET,
+    START_TEXT_OFFSET,
+    START_HIGHSCORE_OFFSET,
+    START_PAUSE_OFFSET,
+    PAUSE_TEXT_OFFSET,
+    PAUSE_INFO_OFFSET,
+    GAME_OVER_TITLE_OFFSET,
+    GAME_OVER_SCORE_OFFSET,
+    GAME_OVER_HIGHSCORE_OFFSET,
+    GAME_OVER_RESTART_OFFSET,
+    GAME_OVER_CONGRATS_OFFSET,
+    FPS,
+)
 
 
 def show_start_screen(screen: pygame.Surface, highscore: int) -> tuple[int, int]:
