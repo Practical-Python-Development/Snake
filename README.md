@@ -16,18 +16,27 @@ or press x or esc to end the game.
 Pressing the space bar will take you back to the home screen. Pressing any arrow key will restart the game. If you press the space bar during the game 
 , you can interrupt the game. You will then be prompted to press the space bar again to continue the game or press x or esc to end the game.
 
+## Installation
 
-# Feedback
-This looks already quite nice. After installing the missing requirements it was really fun!
+### Requirements
+- Python 3.10 or higher
+- `pip` (Python package manager)
 
-Here are some remarks, next to the comments I gave in code:
-- README.md is already informative, but please also add an installation and execution guide (check our repositories for this) 
-- the package folder "Snake_game" (which contains the modules) should follow the naming convention for variables -> "snake_game"
-- please have a look at our suggested project structure, tests should be seperated from you "runnable" code
-- You are missing a `requirements.txt`, as it is I wouldn't be able to run it as `pygame` is missing
-- You have proper commit messages, but didn't use feature branches, please use some, as you implement my remarks
-- Docstrings are pretty nice
-- You have no typing yet, mypy might rage
-- please run ruff and mypy on your code
+### StepsClone this repository:
+   ```bash
+   git clone https://github.com/jnnkhffr/Snake.git
+   cd Snake 
+   ```
+
+### Install dependencies:
+pip install -r requirements.txt
+
+
+## Execution
+From the project root, run:
+- python -m snake_game.main
+
+
+
 
  
